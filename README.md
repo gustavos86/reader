@@ -87,3 +87,18 @@ jobs:
           python-version: "3.13"
       - run: python -m pip install -r requirements.txt
 ```
+
+# Call other Workflows
+
+This line should be on the triggers section
+
+```
+workflow_call:
+```
+
+Then, call it from another GitHub Workflow
+
+```
+# Github-username/repo/path/to/workflow@version
+- uses: realpython/reader/.github/workflows/test.yml@master
+```
