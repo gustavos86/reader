@@ -88,7 +88,7 @@ jobs:
       - run: python -m pip install -r requirements.txt
 ```
 
-# Call other Workflows
+## Call other Workflows
 
 This line should be on the triggers section
 
@@ -102,3 +102,14 @@ Then, call it from another GitHub Workflow
 # Github-username/repo/path/to/workflow@version
 - uses: realpython/reader/.github/workflows/test.yml@master
 ```
+
+## Tag a commit
+
+```
+$ git tag -a "1.0.0" -m "1.0.0"
+$ git push --tags
+```
+
+# Using secrets in GitHub Actions
+
+[Creating secrets for a repository](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-a-repository)
