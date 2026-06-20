@@ -1,64 +1,89 @@
-# Real Python Feed Reader
+# GitHub Workflows
 
-The Real Python Feed Reader is a basic [web feed](https://en.wikipedia.org/wiki/Web_feed) reader that can download the latest Real Python tutorials from the [Real Python feed](https://realpython.com/contact/#rss-atom-feed).
+Tutorial: [Continuous Integration and Deployment for Python With GitHub Actions](https://realpython.com/github-actions-python/)
 
-For more information see the tutorial [How to Publish an Open-Source Python Package to PyPI](https://realpython.com/pypi-publish-python-package/) on Real Python.
+There are three main parts that make up the bulk of a workflow file: **triggers**, **jobs**, and **steps**. You’ll cover these in the next sections.
 
-## Installation
+## Workflow Triggers
 
-You can install the Real Python Feed Reader from [PyPI](https://pypi.org/project/realpython-reader/):
+There are many kinds of triggers:
 
-    python -m pip install realpython-reader
+* Pull request
+* Pushed commit to the default branch
+* Tagged commit
+* Manual trigger
+* Request by another workflow
+* New issue being opened
 
-The reader is supported on Python 3.7 and above. Older versions of Python, including Python 2.7, are supported by version 1.0.0 of the reader.
+Trigger that runs a workflow on any push to the main branch:
 
-## How to use
+```
+on:
+  push:
+    branches:
+      - main
+```
 
-The Real Python Feed Reader is a command line application, named `realpython`. To see a list of the [latest Real Python tutorials](https://realpython.com/), call the program without any arguments:
+Official documentation [Events that trigger workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows)
 
-    $ realpython
-    The latest tutorials from Real Python (https://realpython.com/)
-     0 How to Publish an Open-Source Python Package to PyPI
-     1 Python "while" Loops (Indefinite Iteration)
-     2 Writing Comments in Python (Guide)
-     3 Setting Up Python for Machine Learning on Windows
-     4 Python Community Interview With Michael Kennedy
-     5 Practical Text Classification With Python and Keras
-     6 Getting Started With Testing in Python
-     7 Python, Boto3, and AWS S3: Demystified
-     8 Python's range() Function (Guide)
-     9 Python Community Interview With Mike Grouchy
-    10 How to Round Numbers in Python
-    11 Building and Documenting Python REST APIs With Flask and Connexion – Part 2
-    12 Splitting, Concatenating, and Joining Strings in Python
-    13 Image Segmentation Using Color Spaces in OpenCV + Python
-    14 Python Community Interview With Mahdi Yusuf
-    15 Absolute vs Relative Imports in Python
-    16 Top 10 Must-Watch PyCon Talks
-    17 Logging in Python
-    18 The Best Python Books
-    19 Conditional Statements in Python
+## Workflow Jobs
 
-To read one particular tutorial, call the program with the numerical ID of the tutorial as a parameter:
+A workflow can include **one or more jobs** that it will run, and **each job can contain one or more steps**.
 
-    $ realpython 0
-    # How to Publish an Open-Source Python Package to PyPI
+Example with no steps:
 
-    Python is famous for coming with batteries included. Sophisticated
-    capabilities are available in the standard library. You can find modules for
-    working with sockets, parsing CSV, JSON, and XML files, and working with
-    files and file paths.
+```
+# ...
 
-    However great the packages included with Python are, there are many
-    fantastic projects available outside the standard library. These are most
-    often hosted at the Python Packaging Index (PyPI), historically known as the
-    Cheese Shop. At PyPI, you can find everything from Hello World to advanced
-    deep learning libraries.
+jobs:
+  my_first_job:
+    name: My first job
+  my_second_job:
+    name: My second job
+```
 
-    [... The full text of the article ...]
+You define the runner you want to use to run your job. A runner is a GitHub-hosted virtual machine (VM) that executes your jobs for you.
 
-You can also call the Real Python Feed Reader in your own Python code, by importing from the `reader` package:
+There are multiple supported operating systems available. You can find the [full list of GitHub-hosted runners](https://docs.github.com/en/actions/concepts/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories) in the documentation.
 
-    >>> from reader import feed
-    >>> feed.get_titles()
-    ['How to Publish an Open-Source Python Package to PyPI', ...]
+```
+# ...
+
+jobs:
+  my_first_job:
+    name: My first job
+    runs-on: ubuntu-latest
+    # ...
+  my_second_job:
+    name: My second job
+    runs-on: windows-latest
+    # ...
+```
+
+## Workflow Steps
+
+Steps are the main part of a job. The steps declare the actions that need to be performed when executing the workflow. This can include tasks such as installing Python, running tests, linting your code, or using another GitHub action.
+
+## GitHub Marketplace
+
+The [GitHub Marketplace](https://github.com/marketplace) is an online repository of all the actions people can use in their own workflows.
+
+## Including Actions in Workflows
+
+1. check out your current repository into the workflow environment
+2. install and set up Python
+
+```
+# ...
+
+jobs:
+  my_first_job:
+    name: My first job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install -r requirements.txt
+```
