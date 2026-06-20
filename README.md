@@ -110,6 +110,20 @@ $ git tag -a "1.0.0" -m "1.0.0"
 $ git push --tags
 ```
 
-# Using secrets in GitHub Actions
+## Using secrets in GitHub Actions
 
 [Creating secrets for a repository](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets#creating-secrets-for-a-repository)
+
+
+## To Puslish
+
+```
+Modify version in pyproject.toml
+version = "1.1.4"
+
+Commit
+git commit -m "Bump version to 1.1.4"
+
+Push with tags
+git push origin github-actions-tutorial 1.1.4
+```
