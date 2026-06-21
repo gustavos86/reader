@@ -127,3 +127,7 @@ git commit -m "Bump version to 1.1.4"
 Push with tags
 git push origin github-actions-tutorial 1.1.4
 ```
+
+## Dependabot
+
+[Dependabot options reference](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference)
